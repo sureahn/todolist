@@ -24,7 +24,7 @@ function render() {
     for (let i=0;i<taskList.length;i++){
         resultHTML += `
         <div class="task">
-            <div>${taskList[i]}</div>ss
+            <div>${taskList[i]}</div>
             <div>
               <button>Check</button>
               <button>Delete</button>

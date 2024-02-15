@@ -19,7 +19,7 @@ let taskList = [];
 addButton.addEventListener("click", addTask); //(event,function)
 
 
-For (let i=1;i<tabs.length;i++) {
+for (let i=1;i<tabs.length;i++) {
   tabs[i].addEventListener("click", function(event){
     filter(event)})
 }
@@ -95,7 +95,7 @@ function deleteTask(id) {
 }
 
 function filter(event) {
-  console.log("filter");
+  console.log("filter", event.target);
 }
 
 function randomIDGenerate() {

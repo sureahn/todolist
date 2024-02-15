@@ -16,13 +16,25 @@ let taskInput = document.getElementById("task-input");
 let addButton = document.getElementById("add-button");
 let tabs = document.querySelectorAll(".task-tabs div") // 조건에 만족하는 모든걸 가져옴
 let taskList = [];
+let mode = 'all'; //전역변수로 선언해서 어디서든 쓸 수 있음
+let filterList = [];
+
 addButton.addEventListener("click", addTask); //(event,function)
-
-
-for (let i=1;i<tabs.length;i++) {
-  tabs[i].addEventListener("click", function(event){
-    filter(event)})
+taskInput.addEventListener("keydown", function (event) {
+  if (event.keyCode === 13) {
+    addTask(event);
+  }
+});
+for (let i = 0; i < tabs.length; i++) {
+  tabs[i].addEventListener("click", function (event) {
+    filter(event);
+  });
 }
+
+// for (let i=1;i<tabs.length;i++) {
+//   tabs[i].addEventListener("click", function(event){
+//     filter(event)})
+// }
 
 function addTask() {
 
@@ -37,16 +49,25 @@ function addTask() {
 }
 
 function render() {
+  //내가 선택한 탭에 따라서 
+  let list = [];
+  if (mode === "all") {
+    list = taskList;
+  } else { //else if (mode === "doing" || mode === "done") { //|| or()
+    //doing taskList
+    list = filterList;
+  } 
+  //리스트를 달리보여준다
     let resultHTML = "";
-    for (let i=0;i<taskList.length;i++){
-      if (taskList[i].isComplete == true) {
+    for (let i=0; i < list.length; i++){
+      if (list[i].isComplete) {
         resultHTML+=`<div class="task">
-        <div class="task-done">${taskList[i].taskContent}</div> 
+        <div class="task-done">${list[i].taskContent}</div> 
         <div>
-          <button onclick="toggleComplete('${taskList[i].id}')">
+          <button onclick="toggleComplete('${list[i].id}')">
             <i class="fa-solid fa-rotate-left"></i>
           </button>
-          <button onclick="deleteTask('${taskList[i].id}')">
+          <button onclick="deleteTask('${list[i].id}')">
             <i class="fa-solid fa-trash"></i>
           </button>
         </div>
@@ -54,12 +75,12 @@ function render() {
     } else {
       resultHTML += `
         <div class="task">
-            <div class="">${taskList[i].taskContent}</div> 
+            <div class="">${list[i].taskContent}</div> 
             <div>
-            <button onclick="toggleComplete('${taskList[i].id}')">
+            <button onclick="toggleComplete('${list[i].id}')">
               <i class="fa-solid fa-check"></i>
           </button>
-              <button onclick="deleteTask('${taskList[i].id}')">
+              <button onclick="deleteTask('${list[i].id}')">
                 <i class="fa-solid fa-trash"></i>
               </button>
             </div>
@@ -95,7 +116,34 @@ function deleteTask(id) {
 }
 
 function filter(event) {
-  console.log("filter", event.target);
+  console.log("filter", event.target.id);
+
+  let mode = event.target.id
+  let filterList = [];
+
+  if (mode === "all") {
+    //show all items
+    render();
+  } else if (mode === "doing") {
+    //show doing items
+    //task.isComplete=false
+    for (let i=0;i<taskList.length;i++) {
+      if (taskList[i].isComplete === false) {
+        filterList.push(taskList[i])
+      }
+    }
+    render();
+    console.log("doing",filterList);
+  } else if (mode === "done") {
+    //show done items
+    //task.isComplete = true
+    for (let i=0;i<taskList.length;i++) {
+      if (taskList[i].isComplete === true) {
+        filterList.push(taskList[i])
+      }
+    }
+    render();
+  }
 }
 
 function randomIDGenerate() {

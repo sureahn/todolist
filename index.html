@@ -15,6 +15,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="icon" href="favicon.png" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -22,21 +23,31 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Protest+Riot&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div class="container">
       <h1>Todo List</h1>
       <section class="input-area">
-        <input type="text" id="task-input" />
+        <input type="text" id="task-input" placeholder="Task" />
         <button id="add-button">+</button>
       </section>
 
       <section class="task-area">
         <div class="task-tabs">
-          <div id="under-line"></div>
           <div id="all">All</div>
           <div id="doing">Doing</div>
           <div id="done">Done</div>
+          <div id="under-line"></div>
         </div>
         <div id="task-board">
           <div class="task">

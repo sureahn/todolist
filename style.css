@@ -1,29 +1,77 @@
 body {
     margin: 0px;
-    background-image: url("images/background.avif");
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-color: rgb(19, 19, 19);
+    padding: 8px;
+    color: rgb(241, 241, 241);
+
 }
 
+h1 {
+    text-align: center;
+    font-size: 10vw;
+    margin-bottom: 16px;
+    font-family: "Protest Riot", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
 .container {
-    background-color: aliceblue;
+    padding: 16px;
+    margin: 0 auto;
+    border-radius: 16px;
+    background-color: rgb(27, 27, 27);
     height: 100vh;
+    min-width: 360px;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+ 
+      
+}
+
+.input-area {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    height: 60px;
+}
+
+.input-area #task-input {
+    width: calc(100% - 76px);
+    background-color: #383838;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 4px 4px 8px 3px rgba(0, 0, 0, 0.15);
+    padding: 12px;
+    color: rgb(241, 241, 241);
+}
+
+.input-area #add-button {
+    width: 60px;
+    border-radius: 50%;
+    border: none;
+    box-shadow: 4px 4px 8px 3px rgba(0, 0, 0, 0.15);
+    color: antiquewhite;
+    background-color: #383838;
+    font-size: 24px;
 }
 
 .task-area {
-    border: 1px solid lightgray;
+    border-bottom: 1px solid rgb(63, 63, 63);
     margin-top: 1em;
 }
 
 .task-tabs {
     display: flex;
-    border-bottom: 1px solid lightgray;
+    justify-content: space-around;
+    border-bottom: 1px solid rgb(63, 63, 63);
     position: relative;
 }
 
 .task-tabs div {
     cursor: pointer;
+    
 }
 
 .task-tabs div {
@@ -32,10 +80,10 @@ body {
 
 #under-line {
     height: 6px;
-    width: 80px;
+    width: 33.3%;
     top: 60px;
     left: 0px;
-    background-color: brown;
+    background-color: rgb(36, 65, 228);
     position: absolute;
     padding: 0; 
     /* div에 기본 패딩값 있음. */
@@ -47,6 +95,12 @@ body {
     padding: 1em;
 }
 
+.task button i {
+    background-color: none;
+}
+
 .task-done {
     text-decoration: line-through;
+    color: #4d4d4d;
 }
+

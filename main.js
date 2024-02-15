@@ -14,8 +14,15 @@
 
 let taskInput = document.getElementById("task-input");
 let addButton = document.getElementById("add-button");
+let tabs = document.querySelectorAll(".task-tabs div") // 조건에 만족하는 모든걸 가져옴
 let taskList = [];
 addButton.addEventListener("click", addTask); //(event,function)
+
+
+For (let i=1;i<tabs.length;i++) {
+  tabs[i].addEventListener("click", function(event){
+    filter(event)})
+}
 
 function addTask() {
 
@@ -85,6 +92,10 @@ function deleteTask(id) {
     }
   }
   render();
+}
+
+function filter(event) {
+  console.log("filter");
 }
 
 function randomIDGenerate() {

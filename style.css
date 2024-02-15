@@ -23,6 +23,10 @@ body {
 }
 
 .task-tabs div {
+    cursor: pointer;
+}
+
+.task-tabs div {
     padding: 1em;
 }
 

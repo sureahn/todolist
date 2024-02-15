@@ -37,9 +37,11 @@ function render() {
         <div class="task-done">${taskList[i].taskContent}</div> 
         <div>
           <button onclick="toggleComplete('${taskList[i].id}')">
-          Check
-        </button>
-          <button onclick="deleteTask('${taskList[i].id}')">Delete</button>
+            <i class="fa-solid fa-rotate-left"></i>
+          </button>
+          <button onclick="deleteTask('${taskList[i].id}')">
+            <i class="fa-solid fa-trash"></i>
+          </button>
         </div>
       </div>`;
     } else {
@@ -48,9 +50,11 @@ function render() {
             <div class="">${taskList[i].taskContent}</div> 
             <div>
             <button onclick="toggleComplete('${taskList[i].id}')">
-            Check
+              <i class="fa-solid fa-check"></i>
           </button>
-              <button onclick="deleteTask('${taskList[i].id}')">Delete</button>
+              <button onclick="deleteTask('${taskList[i].id}')">
+                <i class="fa-solid fa-trash"></i>
+              </button>
             </div>
           </div>`; 
 

@@ -31,120 +31,132 @@ for (let i = 0; i < tabs.length; i++) {
   });
 }
 
-// for (let i=1;i<tabs.length;i++) {
-//   tabs[i].addEventListener("click", function(event){
-//     filter(event)})
-// }
+let underLine = document.getElementById("under-line");
+let underMenu = document.querySelectorAll(".task-tabs div");
+let taskTabs = document.querySelector(".task-tabs");
+
+underMenu.forEach((menu, index) =>
+  menu.addEventListener("click", (e) => underIndicator(e, index))
+);
+
+function underIndicator(e, index) {
+  let tabWidth = taskTabs.offsetWidth / 3; // 전체 탭 너비의 33.3%
+  let leftPosition = index * tabWidth; // 각 메뉴 항목의 left 위치
+  
+  underLine.style.transition = "left 0.3s"; // Add transition property
+  
+  underLine.style.left = leftPosition + "px";
+  underLine.style.width = tabWidth + "px"; // 각 메뉴 항목의 너비 설정
+  underLine.style.top =
+    e.currentTarget.offsetTop + e.currentTarget.offsetHeight - 5 + "px";
+}
 
 function addTask() {
+  let task = {
+    id: randomIDGenerate(),
+    taskContent: taskInput.value,
+    isComplete: false,
+  };
+  taskList.push(task);
+  console.log("taskList", taskList); // check function
 
-    let task = { //Object: additional information
-      id: randomIDGenerate(),
-      taskContent: taskInput.value,
-      isComplete: false,
-    };
-    taskList.push(task);
-    console.log("taskList"); //function check
-    render();
+  render(mode); // 현재 모드에 따라서 렌더링
+
+  taskInput.value = ""; // 입력란 초기화
 }
 
-function render() {
-  //내가 선택한 탭에 따라서 
+function render(mode) {
+  // 내가 선택한 탭에 따라서
   let list = [];
   if (mode === "all") {
-    list = taskList;
-  } else { //else if (mode === "doing" || mode === "done") { //|| or()
-    //doing taskList
-    list = filterList;
-  } 
-  //리스트를 달리보여준다
-    let resultHTML = "";
-    for (let i=0; i < list.length; i++){
-      if (list[i].isComplete) {
-        resultHTML+=`<div class="task">
-        <div class="task-done">${list[i].taskContent}</div> 
-        <div>
-          <button onclick="toggleComplete('${list[i].id}')">
-            <i class="fa-solid fa-rotate-left"></i>
+    list = taskList; // "all" 탭에서는 모든 작업을 표시
+  } else if (mode === "doing") {
+    list = taskList.filter(task => !task.isComplete);
+  } else if (mode === "done") {
+    list = taskList.filter(task => task.isComplete);
+  }
+
+  // 리스트를 달리보여준다
+  let resultHTML = "";
+  for (let i = 0; i < list.length; i++) {
+    if (list[i].isComplete) {
+      resultHTML += `<div class="task">
+          <div class="task-done">${list[i].taskContent}</div> 
+          <div>
+          <button onclick="toggleComplete('${list[i].id}', '${mode}')">
+          <i class="fa-solid fa-rotate-left"></i>
           </button>
-          <button onclick="deleteTask('${list[i].id}')">
-            <i class="fa-solid fa-trash"></i>
+          <button onclick="deleteTask('${list[i].id}', '${mode}')">
+          <i class="fa-solid fa-trash"></i>
           </button>
-        </div>
-      </div>`;
+          </div>
+          </div>`;
     } else {
       resultHTML += `
-        <div class="task">
-            <div class="">${list[i].taskContent}</div> 
-            <div>
-            <button onclick="toggleComplete('${list[i].id}')">
-              <i class="fa-solid fa-check"></i>
+          <div class="task">
+          <div class="">${list[i].taskContent}</div> 
+          <div>
+          <button onclick="toggleComplete('${list[i].id}', '${mode}')">
+          <i class="fa-solid fa-check"></i>
           </button>
-              <button onclick="deleteTask('${list[i].id}')">
-                <i class="fa-solid fa-trash"></i>
-              </button>
-            </div>
-          </div>`; 
-
-    }   
+          <button onclick="deleteTask('${list[i].id}', '${mode}')">
+          <i class="fa-solid fa-trash"></i>
+          </button>
+          </div>
+          </div>`;
+    }
   }
-    document.getElementById("task-board").innerHTML = resultHTML;
+  document.getElementById("task-board").innerHTML = resultHTML;
+
+  // 탭을 변경할 때 현재 선택된 탭을 유지하기 위해 필요한 코드
+  for (let i = 0; i < tabs.length; i++) {
+    if (tabs[i].id === mode) {
+      tabs[i].classList.add("active");
+    } else {
+      tabs[i].classList.remove("active");
+    }
+  }
 }
 
 
-
-function toggleComplete(id) {
-  console.log("id:",id);
-  for (let i=0; i<taskList.length;i++){
-    if(taskList[i].id == id) { //아이디 찾으면  다른거 안봐도 됨
-      taskList[i].isComplete = !taskList[i].isComplete //현재값의 반대값 
-      break; // finish for~
+function toggleComplete(id, mode) {
+  console.log("id:", id);
+  for (let i = 0; i < taskList.length; i++) {
+    if (taskList[i].id == id) {
+      // 해당 태스크의 완료 상태를 변경합니다.
+      taskList[i].isComplete = !taskList[i].isComplete;
+      break;
     }
   }
-  render()
-  console.log(taskList); 
+  render(mode); // 현재 모드에 따라서 다시 렌더링합니다.
+  console.log(taskList);
 }
 
 function deleteTask(id) {
-  for(let i=0;i<taskList.length;i++) {
-    if(taskList[i].id == id) { //아이디 찾으면  다른거 안봐도 됨
-      taskList.splice(i,1); //i번째 아이템부터 1개 삭제
+  for (let i = 0; i < taskList.length; i++) {
+    if (taskList[i].id == id) {
+      // 아이디 찾으면 다른거 안봐도 됨
+      taskList.splice(i, 1); // i번째 아이템부터 1개 삭제
       break; // finish for~
     }
   }
-  render();
+  render(mode); // 현재 선택된 탭에 맞게 다시 렌더링합니다.
 }
+
 
 function filter(event) {
   console.log("filter", event.target.id);
 
-  let mode = event.target.id
-  let filterList = [];
+  let mode = event.target.id;
 
   if (mode === "all") {
-    //show all items
-    render();
-  } else if (mode === "doing") {
-    //show doing items
-    //task.isComplete=false
-    for (let i=0;i<taskList.length;i++) {
-      if (taskList[i].isComplete === false) {
-        filterList.push(taskList[i])
-      }
-    }
-    render();
-    console.log("doing",filterList);
-  } else if (mode === "done") {
-    //show done items
-    //task.isComplete = true
-    for (let i=0;i<taskList.length;i++) {
-      if (taskList[i].isComplete === true) {
-        filterList.push(taskList[i])
-      }
-    }
-    render();
+    mode = 'all';
   }
+
+  render(mode);
 }
+
+
 
 function randomIDGenerate() {
   return '_' + Math.random().toString(36).substr(2, 9); //결과물이 다른곳에 쓰이면 return

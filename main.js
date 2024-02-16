@@ -51,16 +51,38 @@ function underIndicator(e, index) {
     e.currentTarget.offsetTop + e.currentTarget.offsetHeight - 5 + "px";
 }
 
+// function addTask() {
+//   let task = {
+//     id: randomIDGenerate(),
+//     taskContent: taskInput.value,
+//     isComplete: false,
+//   };
+//   taskList.push(task);
+//   console.log("taskList", taskList); // check function
+
+//   render(mode); // 현재 모드에 따라서 렌더링
+
+//   taskInput.value = ""; // 입력란 초기화
+// }
+
 function addTask() {
+  let taskContent = taskInput.value.trim(); // 입력된 내용의 앞뒤 공백을 제거
+
+  // taskContent가 빈 문자열인 경우 경고 메시지를 표시하고 함수 종료
+  if (taskContent === "") {
+      alert("Please write your task");
+      return;
+  }
+
   let task = {
-    id: randomIDGenerate(),
-    taskContent: taskInput.value,
-    isComplete: false,
+      id: randomIDGenerate(),
+      taskContent: taskContent,
+      isComplete: false,
   };
   taskList.push(task);
   console.log("taskList", taskList); // check function
 
-  render(mode); // 현재 모드에 따라서 렌더링
+  render("all"); // "all" 모드로 렌더링
 
   taskInput.value = ""; // 입력란 초기화
 }
